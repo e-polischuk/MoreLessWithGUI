@@ -1,6 +1,6 @@
 package ua.itea.moreless;
 
-public interface View {
-	void printMessage(String message);
+public interface View extends MLConst {
+    void printMessage(String message);
 
 }
