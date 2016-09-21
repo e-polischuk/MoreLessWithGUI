@@ -29,14 +29,16 @@ public class ControllerConsole extends Controller {
 	boolean inRange;
 
 	do {
+	    view.printMessage(inputMessage);
 	    while (!sc.hasNextInt()) {
-		warn(inputMessage);
+		view.printMessage(WRONG_INPUT_DATA);
+		view.printMessage(inputMessage);
 		sc.next();
 	    }
 	    intValue = sc.nextInt();
 	    inRange = intValue > min && intValue < max;
 	    if (!inRange) {
-		warn(inputMessage);
+		view.printMessage(WRONG_INPUT_DATA);
 	    }
 	} while (!inRange);
 

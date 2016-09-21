@@ -9,7 +9,7 @@ import java.util.*;
 public class Model implements MLConst {
     // The user's identification key
     private int key;
-    // Map fields for users data location in case when the game is concurrent
+    // Map fields for users data location in accordance with case when the game is concurrent
     private Map<Integer, Integer> secretNums = new HashMap<Integer, Integer>();
     private Map<Integer, Integer> minBounds = new HashMap<Integer, Integer>();
     private Map<Integer, Integer> maxBounds = new HashMap<Integer, Integer>();
@@ -19,10 +19,14 @@ public class Model implements MLConst {
      * 
      * @return key
      */
-    public int start() {
+    public synchronized int start() {
 	setSecretNumber(++key);
 	setMin(key, RAND_MIN);
 	setMax(key, RAND_MAX);
+	
+	//check information
+	System.out.println(Thread.currentThread().getName() + " - was started with key = " + key + " and secret = " + getSecretNumber(key));
+	
 	return key;
     }
 
@@ -31,7 +35,10 @@ public class Model implements MLConst {
      * 
      * @param key
      */
-    public void finish(int key) {
+    public synchronized void finish(int key) {
+	//check information
+	System.out.println(Thread.currentThread().getName() + " - secrets: " + secretNums + "; mins: " + minBounds + "; maxs: " + maxBounds);
+	
 	secretNums.remove(key);
 	minBounds.remove(key);
 	maxBounds.remove(key);
@@ -42,7 +49,7 @@ public class Model implements MLConst {
      * 
      * @return generated value
      */
-    public static int rand() {
+    public synchronized int rand() {
 	return (int) (Math.random() * (RAND_MAX - RAND_MIN - 1) + RAND_MIN + 1);
     }
 
@@ -53,7 +60,7 @@ public class Model implements MLConst {
      * @param inputNumber
      * @return the result message
      */
-    public String compare(Integer key, int inputNumber) {
+    public synchronized String compare(Integer key, int inputNumber) {
 	int randomNumber = getSecretNumber(key);
 	if (randomNumber > inputNumber) {
 	    setMin(key, inputNumber);
@@ -67,7 +74,7 @@ public class Model implements MLConst {
     }
 
     // Utility methods
-    public String createInputMessage(Integer key) {
+    public synchronized String createInputMessage(Integer key) {
 	StringBuffer inputMessage = new StringBuffer(INPUT_INT_DATA);
 	inputMessage.append(String.valueOf(getMin(key)));
 	inputMessage.append(SPACE);
@@ -75,28 +82,48 @@ public class Model implements MLConst {
 	inputMessage.append(END);
 	return inputMessage.toString();
     }
+    
+    public synchronized boolean isInteger(String input) {
+	boolean isInt = false;
+	if (!input.equals(EMPTY)) {
+	    char[] symbols = input.toCharArray();
+	    int b;
+	    for (char ch : symbols) {
+		isInt = false;
+		b = 48;
+		while (!isInt && b <= 58) {
+		    if (b == 58)
+			return isInt;
+		    if (b == (int) ch)
+			isInt = true;
+		    b++;
+		}
+	    }
+	}
+	return isInt;
+    }
 
-    public void setSecretNumber(Integer key) {
+    public synchronized void setSecretNumber(Integer key) {
 	secretNums.put(key, rand());
     }
 
-    public int getSecretNumber(Integer key) {
+    public synchronized int getSecretNumber(Integer key) {
 	return secretNums.get(key);
     }
 
-    public void setMin(Integer key, int min) {
+    public synchronized void setMin(Integer key, int min) {
 	minBounds.put(key, min);
     }
 
-    public int getMin(Integer key) {
+    public synchronized int getMin(Integer key) {
 	return minBounds.get(key);
     }
 
-    public void setMax(Integer key, int max) {
+    public synchronized void setMax(Integer key, int max) {
 	maxBounds.put(key, max);
     }
 
-    public int getMax(Integer key) {
+    public synchronized int getMax(Integer key) {
 	return maxBounds.get(key);
     }
 
