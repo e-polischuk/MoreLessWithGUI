@@ -32,14 +32,7 @@ public abstract class Controller implements MLConst {
 
     }
 
-    /**
-     * Utility method
-     * 
-     * @param inputMessage
-     * @param min
-     * @param max
-     * @return
-     */
+    // Utility method declaration
     public abstract int inputIntValue(String inputMessage, int min, int max);
 
 }

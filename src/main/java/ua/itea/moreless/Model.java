@@ -9,7 +9,7 @@ import java.util.*;
 public class Model implements MLConst {
     // The user's identification key
     private int key;
-    // Map fields for users data location in accordance with case when the game is concurrent
+    // Map fields for users data location provide multithreading
     private Map<Integer, Integer> secretNums = new HashMap<Integer, Integer>();
     private Map<Integer, Integer> minBounds = new HashMap<Integer, Integer>();
     private Map<Integer, Integer> maxBounds = new HashMap<Integer, Integer>();
@@ -69,7 +69,7 @@ public class Model implements MLConst {
 	    setMax(key, inputNumber);
 	    return LESS;
 	} else {
-	    return WINNER.concat(String.valueOf(randomNumber));
+	    return WINNER + randomNumber;
 	}
     }
 

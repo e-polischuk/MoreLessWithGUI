@@ -46,28 +46,29 @@ public class ViewGUI extends JPanel implements View {
 
 	inputLine = EMPTY;
     }
-
-    public JPanel getPanel() {
-	return panel;
-    }
-
+    
     public void printMessage(String message) {
 	display.setText(display.getText() + LN + message);
 	if (message.contains(INPUT_INT_DATA)) {
 	    proceed(false);
 	}
     }
-    
 
     public synchronized void proceed(boolean isInput) {
-	if(isInput) notify();
-	else
+	if(isInput) {
+	    notify();
+	} else {
 	    try {
 		wait();
 	    } catch (InterruptedException e) {
 		e.printStackTrace();
 	    }
+	}    
     }
+    
+    public JPanel getPanel() {
+	return panel;
+    } 
 
     public String getInputLine() {
 	return inputLine;

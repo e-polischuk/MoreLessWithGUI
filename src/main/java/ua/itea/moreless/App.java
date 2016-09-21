@@ -8,16 +8,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
- * Run class
+ * Run class for the multithreaded game "More-Less"
  *
+ * @author Polischuk
  */
-public class App implements Runnable {
-    
-    Model model;
-    
-    public App(Model model) {
-	this.model = model;
-    }
+public class App {
 
     public static void main(String[] args) {
 	EventQueue.invokeLater(new Runnable() {
@@ -42,6 +37,7 @@ public class App implements Runnable {
 		Controller controller1 = new ControllerGUI(model, view1);
 		Controller controller2 = new ControllerGUI(model, view2);
 		Controller controller3 = new ControllerGUI(model, view3);
+		Controller controller = new ControllerConsole(model, new ViewConsole());
 
 		app.setBounds(50, 50, 1200, 600);
 		app.setVisible(true);
@@ -49,7 +45,7 @@ public class App implements Runnable {
 		Thread first = new Thread((ControllerGUI) controller1);
 		Thread second = new Thread((ControllerGUI) controller2);
 		Thread third = new Thread((ControllerGUI) controller3);
-		Thread console = new Thread(new App(model));
+		Thread console = new Thread((ControllerConsole) controller);
 
 		first.setName("View_1");
 		second.setName("View_2");
@@ -62,11 +58,6 @@ public class App implements Runnable {
 		console.start();
 	    }
 	});
-    }
-
-    public void run() {
-	Controller controller = new ControllerConsole(model, new ViewConsole());
-	controller.processUser();
     }
 
 }

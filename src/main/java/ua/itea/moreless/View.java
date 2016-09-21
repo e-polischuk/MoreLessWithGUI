@@ -1,8 +1,8 @@
 package ua.itea.moreless;
 
 /**
- * @author Polischuk
- *
+ * Simple declaration for polymorphism
+ * 
  */
 public interface View extends MLConst {
     

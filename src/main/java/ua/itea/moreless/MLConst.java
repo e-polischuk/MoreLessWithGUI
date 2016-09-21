@@ -1,7 +1,7 @@
 package ua.itea.moreless;
 
 /**
- * @author Polischuk on 14.09.2016.
+ * Used strings
  * 
  */
 public interface MLConst {

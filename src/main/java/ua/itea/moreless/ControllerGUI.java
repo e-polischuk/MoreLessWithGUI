@@ -12,6 +12,7 @@ public class ControllerGUI extends Controller implements Runnable {
 	this.view = (ViewGUI) view;
     }
 
+    // Run method
     public void run() {
 	processUser();
     }
@@ -41,7 +42,7 @@ public class ControllerGUI extends Controller implements Runnable {
 	    }
 	} while (!inRange);
 
-	view.printMessage(OUR_INT.concat(String.valueOf(intValue)));
+	view.printMessage(OUR_INT + intValue);
 	return intValue;
     }
     

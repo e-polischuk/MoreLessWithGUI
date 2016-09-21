@@ -3,16 +3,21 @@ package ua.itea.moreless;
 import java.util.Scanner;
 
 /**
- * @author Polischuk on 14.09.2016.
+ * @author Polischuk
  * 
  */
-public class ControllerConsole extends Controller {
+public class ControllerConsole extends Controller implements Runnable  {
     Scanner sc;
 
     // Constructor
     public ControllerConsole(Model model, View view) {
 	super(model, view);
 	sc = new Scanner(System.in);
+    }
+    
+    // Run method
+    public void run() {
+	processUser();
     }
 
     /**
@@ -42,7 +47,7 @@ public class ControllerConsole extends Controller {
 	    }
 	} while (!inRange);
 
-	view.printMessage(OUR_INT.concat(String.valueOf(intValue)));
+	view.printMessage(OUR_INT + intValue);
 	return intValue;
     }
 
