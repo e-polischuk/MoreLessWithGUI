@@ -4,7 +4,7 @@ package ua.itea.moreless;
  * The abstract controller contains the common methods and fields
  * 
  */
-public abstract class Controller implements MLConst {
+public abstract class Controller implements Runnable, MLConst {
     protected Model model;
     protected View view;
 
@@ -17,7 +17,7 @@ public abstract class Controller implements MLConst {
     /**
      * The work method that processes users requests
      */
-    public void processUser() {
+    public void run() {
 	int key = model.start();
 	int inputNumber;
 	String message;

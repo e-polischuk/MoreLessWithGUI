@@ -6,18 +6,13 @@ import java.util.Scanner;
  * @author Polischuk
  * 
  */
-public class ControllerConsole extends Controller implements Runnable  {
+public class ControllerConsole extends Controller {
     Scanner sc;
 
     // Constructor
     public ControllerConsole(Model model, View view) {
 	super(model, view);
 	sc = new Scanner(System.in);
-    }
-    
-    // Run method
-    public void run() {
-	processUser();
     }
 
     /**

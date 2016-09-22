@@ -42,10 +42,10 @@ public class App {
 		app.setBounds(50, 50, 1200, 600);
 		app.setVisible(true);
 
-		Thread first = new Thread((ControllerGUI) controller1);
-		Thread second = new Thread((ControllerGUI) controller2);
-		Thread third = new Thread((ControllerGUI) controller3);
-		Thread console = new Thread((ControllerConsole) controller);
+		Thread first = new Thread(controller1); //(ControllerGUI)
+		Thread second = new Thread(controller2);
+		Thread third = new Thread(controller3);
+		Thread console = new Thread(controller); //(ControllerConsole) 
 
 		first.setName("View_1");
 		second.setName("View_2");

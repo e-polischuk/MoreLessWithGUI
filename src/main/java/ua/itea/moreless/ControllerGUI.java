@@ -4,17 +4,12 @@ package ua.itea.moreless;
  * @author Polischuk
  *
  */
-public class ControllerGUI extends Controller implements Runnable {
+public class ControllerGUI extends Controller {
     private ViewGUI view;
 
     public ControllerGUI(Model model, View view) {
 	super(model, view);
 	this.view = (ViewGUI) view;
-    }
-
-    // Run method
-    public void run() {
-	processUser();
     }
 
     /**
