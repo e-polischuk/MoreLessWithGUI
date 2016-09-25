@@ -1,5 +1,7 @@
 package ua.itea.moreless;
 
+import java.util.concurrent.CountDownLatch;
+
 /**
  * The abstract controller contains the common methods and fields
  * 
@@ -7,6 +9,7 @@ package ua.itea.moreless;
 public abstract class Controller implements Runnable, MLConst {
     protected Model model;
     protected View view;
+    protected CountDownLatch latch;
 
     // Constructor
     public Controller(Model model, View view) {
@@ -29,10 +32,18 @@ public abstract class Controller implements Runnable, MLConst {
 	} while (inputNumber != model.getSecretNumber(key));
 
 	model.finish(key);
-
+	if (latch != null) latch.countDown();
     }
 
     // Utility method declaration
     public abstract int inputIntValue(String inputMessage, int min, int max);
+
+    public CountDownLatch getLatch() {
+        return latch;
+    }
+
+    public void setLatch(CountDownLatch latch) {
+        this.latch = latch;
+    }
 
 }

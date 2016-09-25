@@ -37,7 +37,7 @@ public class Model implements MLConst {
      */
     public synchronized void finish(int key) {
 	//check information
-	System.out.println(Thread.currentThread().getName() + " - secrets: " + secretNums + "; mins: " + minBounds + "; maxs: " + maxBounds);
+	System.out.println(Thread.currentThread().getName() + " was finished with - secrets: " + secretNums + "; mins: " + minBounds + "; maxs: " + maxBounds);
 	
 	secretNums.remove(key);
 	minBounds.remove(key);
@@ -60,7 +60,7 @@ public class Model implements MLConst {
      * @param inputNumber
      * @return the result message
      */
-    public synchronized String compare(Integer key, int inputNumber) {
+    public synchronized String compare(int key, int inputNumber) {
 	int randomNumber = getSecretNumber(key);
 	if (randomNumber > inputNumber) {
 	    setMin(key, inputNumber);
@@ -74,7 +74,7 @@ public class Model implements MLConst {
     }
 
     // Utility methods
-    public synchronized String createInputMessage(Integer key) {
+    public synchronized String createInputMessage(int key) {
 	StringBuffer inputMessage = new StringBuffer(INPUT_INT_DATA);
 	inputMessage.append(String.valueOf(getMin(key)));
 	inputMessage.append(SPACE);
@@ -85,7 +85,7 @@ public class Model implements MLConst {
     
     public synchronized boolean isInteger(String input) {
 	boolean isInt = false;
-	if (!input.equals(EMPTY)) {
+	if (input != null && !input.isEmpty()) {
 	    char[] symbols = input.toCharArray();
 	    int b;
 	    for (char ch : symbols) {
@@ -103,27 +103,27 @@ public class Model implements MLConst {
 	return isInt;
     }
 
-    public synchronized void setSecretNumber(Integer key) {
+    public synchronized void setSecretNumber(int key) {
 	secretNums.put(key, rand());
     }
 
-    public synchronized int getSecretNumber(Integer key) {
+    public synchronized int getSecretNumber(int key) {
 	return secretNums.get(key);
     }
 
-    public synchronized void setMin(Integer key, int min) {
+    public synchronized void setMin(int key, int min) {
 	minBounds.put(key, min);
     }
 
-    public synchronized int getMin(Integer key) {
+    public synchronized int getMin(int key) {
 	return minBounds.get(key);
     }
 
-    public synchronized void setMax(Integer key, int max) {
+    public synchronized void setMax(int key, int max) {
 	maxBounds.put(key, max);
     }
 
-    public synchronized int getMax(Integer key) {
+    public synchronized int getMax(int key) {
 	return maxBounds.get(key);
     }
 
